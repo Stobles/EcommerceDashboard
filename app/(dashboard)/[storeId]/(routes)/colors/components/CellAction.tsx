@@ -30,7 +30,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const [open, setOpen] = useState(false);
 
   const { loginToast } = useCustomToast();
-  const { mutate: onConfirm, isLoading: isConfirmLoading } = useMutation({
+  const { isLoading: isConfirmLoading, mutate: onConfirm } = useMutation({
     mutationFn: async () => {
       await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
     },
@@ -43,8 +43,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       }
 
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -84,9 +84,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
             <Copy className="mr-2 h-4 w-4" /> Копировать id
           </DropdownMenuItem>
           <DropdownMenuItem
-            onClick={() =>
-              router.push(`/${params.storeId}/colors/${data.id}`)
-            }
+            onClick={() => router.push(`/${params.storeId}/colors/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" /> Изменить
           </DropdownMenuItem>
@@ -98,4 +96,3 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     </>
   );
 };
-

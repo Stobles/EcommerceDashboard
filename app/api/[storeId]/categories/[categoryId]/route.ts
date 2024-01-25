@@ -15,24 +15,24 @@ export async function GET(
     }
 
     const category = await db.category.findUnique({
-      where: {
-        id: params.categoryId
-      },
       include: {
-       billboard: true,
-      }
+        billboard: true,
+      },
+      where: {
+        id: params.categoryId,
+      },
     });
-  
+
     return NextResponse.json(category);
   } catch (error) {
-    console.log('[BILLBOARD_GET]', error);
+    console.log("[BILLBOARD_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { categoryId: string, storeId: string } }
+  { params }: { params: { categoryId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -49,7 +49,7 @@ export async function DELETE(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
@@ -59,28 +59,27 @@ export async function DELETE(
     const category = await db.category.delete({
       where: {
         id: params.categoryId,
-      }
+      },
     });
-  
+
     return NextResponse.json(category);
   } catch (error) {
-    console.log('[BILLBOARD_DELETE]', error);
+    console.log("[BILLBOARD_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
-
+}
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { categoryId: string, storeId: string } }
+  { params }: { params: { categoryId: string; storeId: string } }
 ) {
-  try {   
+  try {
     const { userId } = auth();
 
     const body = await req.json();
-    
-    const { name, billboardId } = CategoryValidator.parse(body);
-    
+
+    const { billboardId, name } = CategoryValidator.parse(body);
+
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 401 });
     }
@@ -101,7 +100,7 @@ export async function PATCH(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
@@ -109,15 +108,15 @@ export async function PATCH(
     }
 
     const category = await db.category.update({
+      data: {
+        billboardId,
+        name,
+      },
       where: {
         id: params.categoryId,
       },
-      data: {
-        name,
-        billboardId
-      }
     });
-  
+
     return NextResponse.json(category);
   } catch (error) {
     console.log(error);
@@ -127,4 +126,4 @@ export async function PATCH(
 
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

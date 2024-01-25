@@ -48,10 +48,10 @@ interface ProductFormProps {
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
-  initialData,
   categories,
-  sizes,
   colors,
+  initialData,
+  sizes,
 }) => {
   const params = useParams();
   const router = useRouter();
@@ -73,23 +73,23 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         price: parseFloat(String(initialData?.price)),
       }
     : {
-        name: "",
-        images: [],
-        price: 0,
         amount: 0,
         categoryId: "",
         colorId: "",
-        sizeId: "",
-        isFeatured: false,
+        images: [],
         isArchived: false,
+        isFeatured: false,
+        name: "",
+        price: 0,
+        sizeId: "",
       };
 
   const form = useForm<ProductRequest>({
-    resolver: zodResolver(ProductValidator),
     defaultValues,
+    resolver: zodResolver(ProductValidator),
   });
 
-  const { mutate: onSubmit, isLoading: isChangeLoading } = useMutation({
+  const { isLoading: isChangeLoading, mutate: onSubmit } = useMutation({
     mutationFn: async (payload: ProductRequest) => {
       const { data } = initialData
         ? await axios.patch(
@@ -115,8 +115,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         }
       }
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -129,7 +129,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     },
   });
 
-  const { mutate: onDelete, isLoading: isDeleteLoading } = useMutation({
+  const { isLoading: isDeleteLoading, mutate: onDelete } = useMutation({
     mutationFn: async () => {
       const { data } = await axios.delete(
         `/api/${params.storeId}/products/${params.productId}`
@@ -140,8 +140,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
       if (err instanceof AxiosError) {
         if (err.response?.status === 400) {
           toast({
-            title: "Неправильный id.",
             description: "Введен неверный id.",
+            title: "Неправильный id.",
             variant: "destructive",
           });
           return;
@@ -160,9 +160,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
           return;
         }
         toast({
-          title: "Произошла ошибка",
           description:
             "Убедитесь, что вы удалили все товары, которые используют этот размер.",
+          title: "Произошла ошибка",
           variant: "destructive",
         });
         return;

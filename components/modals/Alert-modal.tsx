@@ -13,10 +13,10 @@ interface AlertModalProps {
 }
 
 export const AlertModal: React.FC<AlertModalProps> = ({
+  isLoading,
   isOpen,
   onClose,
   onConfirm,
-  isLoading
 }) => {
   const [isMounted, setIsMounted] = useState(false);
 
@@ -39,7 +39,9 @@ export const AlertModal: React.FC<AlertModalProps> = ({
         <Button disabled={isLoading} variant="outline" onClick={onClose}>
           Отмена
         </Button>
-        <Button disabled={isLoading} variant="destructive" onClick={onConfirm}>Продолжить</Button>
+        <Button disabled={isLoading} variant="destructive" onClick={onConfirm}>
+          Продолжить
+        </Button>
       </div>
     </Modal>
   );

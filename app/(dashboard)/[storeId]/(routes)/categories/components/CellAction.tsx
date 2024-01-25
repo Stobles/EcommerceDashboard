@@ -27,7 +27,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
   const [open, setOpen] = useState(false);
-  const { mutate: onConfirm, isLoading: isConfirmLoading } = useMutation({
+  const { isLoading: isConfirmLoading, mutate: onConfirm } = useMutation({
     mutationFn: async () => {
       await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
     },
@@ -35,8 +35,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           toast({
-            title: "Неправильное название",
             description: "Такое название уже используется",
+            title: "Неправильное название",
             variant: "destructive",
           });
           return;
@@ -44,8 +44,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
 
         if (err.response?.status === 401) {
           toast({
-            title: "Авторизуйтесь",
             description: "Авторизуйтесь, чтобы изменить название.",
+            title: "Авторизуйтесь",
             variant: "destructive",
           });
           return;
@@ -53,8 +53,8 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
       }
 
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -108,4 +108,3 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     </>
   );
 };
-

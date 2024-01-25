@@ -14,16 +14,14 @@ import DashboardHeading from "@/components/DashboardHeading";
 
 interface ProductsClientProps {
   data: ProductColumn[];
-};
+}
 
-export const ProductsClient: React.FC<ProductsClientProps> = ({
-  data
-}) => {
+export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
   const params = useParams();
   const router = useRouter();
 
   return (
-    <> 
+    <>
       <DashboardHeading
         title={`Товары (${data.length})`}
         description="Управляйте товарами в своем магазине"

@@ -40,8 +40,8 @@ interface CategoryFormProps {
 }
 
 export const CategoryForm: React.FC<CategoryFormProps> = ({
-  initialData,
   billboards,
+  initialData,
 }) => {
   const params = useParams();
   const router = useRouter();
@@ -59,16 +59,16 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const action = initialData ? "Сохранить изменения" : "Создать";
 
   const form = useForm<CategoryRequest>({
-    resolver: zodResolver(CategoryValidator),
     defaultValues: initialData || {
-      name: "",
       billboardId: "",
+      name: "",
     },
+    resolver: zodResolver(CategoryValidator),
   });
 
-  const { mutate: onSubmit, isLoading: isChangeLoading } = useMutation({
-    mutationFn: async ({ name, billboardId }: CategoryRequest) => {
-      const payload: CategoryRequest = { name, billboardId };
+  const { isLoading: isChangeLoading, mutate: onSubmit } = useMutation({
+    mutationFn: async ({ billboardId, name }: CategoryRequest) => {
+      const payload: CategoryRequest = { billboardId, name };
       const { data } = initialData
         ? await axios.patch(
             `/api/${params.storeId}/categories/${params.categoryId}`,
@@ -93,8 +93,8 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         }
       }
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -107,7 +107,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
     },
   });
 
-  const { mutate: deleteStore, isLoading: isDeleteLoading } = useMutation({
+  const { isLoading: isDeleteLoading, mutate: deleteStore } = useMutation({
     mutationFn: async () => {
       const { data } = await axios.delete(
         `/api/${params.storeId}/categories/${params.categoryId}`
@@ -118,8 +118,8 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       if (err instanceof AxiosError) {
         if (err.response?.status === 400) {
           toast({
-            title: "Неправильный id.",
             description: "Введен неверный id билборда.",
+            title: "Неправильный id.",
             variant: "destructive",
           });
           return;
@@ -138,9 +138,9 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           return;
         }
         toast({
-          title: "Произошла ошибка",
           description:
             "Убедитесь, что вы удалили все товары, которые используют эту категорию.",
+          title: "Произошла ошибка",
           variant: "destructive",
         });
         return;

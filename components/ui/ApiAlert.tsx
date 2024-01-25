@@ -8,40 +8,37 @@ import { toast } from "@/hooks/use-toast";
 interface ApiAlertProps {
   title: string;
   description: string;
-  variant: 'public' | 'admin',
-};
-
+  variant: "public" | "admin";
+}
 
 const textMap: Record<ApiAlertProps["variant"], string> = {
-  public: 'Public',
-  admin: 'Admin'
+  admin: "Admin",
+  public: "Public",
 };
 
 const variantMap: Record<ApiAlertProps["variant"], BadgeProps["variant"]> = {
-  public: 'secondary',
-  admin: 'destructive'
+  admin: "destructive",
+  public: "secondary",
 };
 
 export const ApiAlert: React.FC<ApiAlertProps> = ({
-  title,
   description,
-  variant = "public"
+  title,
+  variant = "public",
 }) => {
   const onCopy = (description: string) => {
     navigator.clipboard.writeText(description);
     toast({
-      title: 'API Route copied to clipboard'
-    })
-  }
+      title: "API Route copied to clipboard",
+    });
+  };
 
-  return ( 
+  return (
     <Alert className="!pl-4 md:!pl-12">
       <Server className="h-4 w-4 hidden md:block" />
       <AlertTitle className="flex items-center gap-x-2">
         {title}
-        <Badge variant={variantMap[variant]}>
-          {textMap[variant]}
-        </Badge>
+        <Badge variant={variantMap[variant]}>{textMap[variant]}</Badge>
       </AlertTitle>
       <AlertDescription className="mt-4 flex items-center justify-between gap-2">
         <code className="relative rounded truncate bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold">
@@ -52,5 +49,5 @@ export const ApiAlert: React.FC<ApiAlertProps> = ({
         </Button>
       </AlertDescription>
     </Alert>
-   );
+  );
 };

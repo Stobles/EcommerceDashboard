@@ -16,9 +16,7 @@ interface ColorsClientProps {
   data: ColorColumn[];
 }
 
-export const ColorsClient: React.FC<ColorsClientProps> = ({
-  data
-}) => {
+export const ColorsClient: React.FC<ColorsClientProps> = ({ data }) => {
   const params = useParams();
 
   return (

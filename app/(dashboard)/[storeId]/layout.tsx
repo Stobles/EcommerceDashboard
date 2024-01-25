@@ -1,31 +1,34 @@
 import Navbar from "@/components/Navbar";
 import db from "@/lib/prismadb";
-import { auth } from "@clerk/nextjs"
-import { redirect } from 'next/navigation';
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 interface LayoutProps {
-  children: React.ReactNode,
+  children: React.ReactNode;
   params: {
-    storeId: string
-  }
+    storeId: string;
+  };
 }
 
-export default async function DashboardLayout({children, params : { storeId }}: LayoutProps) {
+export default async function DashboardLayout({
+  children,
+  params: { storeId },
+}: LayoutProps) {
   const { userId } = auth();
 
-  if(!userId) {
-    redirect('/sign-in');
+  if (!userId) {
+    redirect("/sign-in");
   }
 
   const store = await db.store.findFirst({
     where: {
       id: storeId,
-      userId
-    }
+      userId,
+    },
   });
 
-  if(!store) {
-    redirect('/');
+  if (!store) {
+    redirect("/");
   }
 
   return (
@@ -33,5 +36,5 @@ export default async function DashboardLayout({children, params : { storeId }}: 
       <Navbar />
       {children}
     </>
-  )
+  );
 }

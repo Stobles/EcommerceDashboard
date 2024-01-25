@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
 
-import db from '@/lib/prismadb';
-import { z } from 'zod';
-import { ColorValidator } from '@/lib/validators/color';
- 
+import db from "@/lib/prismadb";
+import { z } from "zod";
+import { ColorValidator } from "@/lib/validators/color";
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -35,8 +35,8 @@ export async function POST(
     const storeByUserId = await db.store.findFirst({
       where: {
         id: params.storeId,
-        userId
-      }
+        userId,
+      },
     });
 
     if (!storeByUserId) {
@@ -46,11 +46,11 @@ export async function POST(
     const color = await db.color.create({
       data: {
         name,
+        storeId: params.storeId,
         value,
-        storeId: params.storeId
-      }
+      },
     });
-  
+
     return NextResponse.json(color);
   } catch (error) {
     console.log(error);
@@ -60,7 +60,7 @@ export async function POST(
 
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function GET(
   req: Request,
@@ -73,13 +73,13 @@ export async function GET(
 
     const colors = await db.color.findMany({
       where: {
-        storeId: params.storeId
-      }
+        storeId: params.storeId,
+      },
     });
-  
+
     return NextResponse.json(colors);
   } catch (error) {
-    console.log('[COLORS_GET]', error);
+    console.log("[COLORS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

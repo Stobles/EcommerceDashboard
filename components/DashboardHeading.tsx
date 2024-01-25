@@ -12,10 +12,10 @@ interface DashboardHeadingProps {
 }
 
 const DashboardHeading: FC<DashboardHeadingProps> = ({
-  title,
   description,
-  redirectTo = '',
   isEdit = true,
+  redirectTo = "",
+  title,
 }) => {
   const router = useRouter();
   return (

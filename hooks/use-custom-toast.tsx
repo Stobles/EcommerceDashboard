@@ -5,9 +5,6 @@ import { buttonVariants } from "@/components/ui/Button";
 export const useCustomToast = () => {
   const loginToast = () => {
     const { dismiss } = toast({
-      title: "Login required",
-      description: "You need to be logged in to do that.",
-      variant: "destructive",
       action: (
         <Link
           href="/sign-in"
@@ -17,6 +14,9 @@ export const useCustomToast = () => {
           Login
         </Link>
       ),
+      description: "You need to be logged in to do that.",
+      title: "Login required",
+      variant: "destructive",
     });
   };
 

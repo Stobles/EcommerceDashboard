@@ -14,7 +14,7 @@ export async function POST(
 
     const body = await req.json();
 
-    const { name, billboardId } = CategoryValidator.parse(body);
+    const { billboardId, name } = CategoryValidator.parse(body);
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -45,8 +45,8 @@ export async function POST(
 
     const category = await db.category.create({
       data: {
-        name,
         billboardId,
+        name,
         storeId: params.storeId,
       },
     });

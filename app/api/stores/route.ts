@@ -23,10 +23,10 @@ export async function POST(req: Request) {
       where: {
         name,
         userId,
-      }
-    })
+      },
+    });
 
-    if(isExist) {
+    if (isExist) {
       return new NextResponse("Name is already taken", { status: 409 });
     }
 
@@ -38,7 +38,6 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(store);
-    
   } catch (error) {
     console.log("[STORES_POST]", error);
 

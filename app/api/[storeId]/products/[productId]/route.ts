@@ -15,27 +15,27 @@ export async function GET(
     }
 
     const product = await db.product.findUnique({
-      where: {
-        id: params.productId
-      },
       include: {
-        images: true,
         category: true,
-        size: true,
         color: true,
-      }
+        images: true,
+        size: true,
+      },
+      where: {
+        id: params.productId,
+      },
     });
-  
+
     return NextResponse.json(product);
   } catch (error) {
-    console.log('[PRODUCT_GET]', error);
+    console.log("[PRODUCT_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { productId: string, storeId: string } }
+  { params }: { params: { productId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
@@ -51,8 +51,8 @@ export async function DELETE(
     const storeByUserId = await db.store.findFirst({
       where: {
         id: params.storeId,
-        userId
-      }
+        userId,
+      },
     });
 
     if (!storeByUserId) {
@@ -61,28 +61,36 @@ export async function DELETE(
 
     const product = await db.product.delete({
       where: {
-        id: params.productId
+        id: params.productId,
       },
     });
-  
+
     return NextResponse.json(product);
   } catch (error) {
-    console.log('[PRODUCT_DELETE]', error);
+    console.log("[PRODUCT_DELETE]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
-
+}
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { productId: string, storeId: string } }
+  { params }: { params: { productId: string; storeId: string } }
 ) {
   try {
     const { userId } = auth();
 
     const body = await req.json();
 
-    const { name, price, categoryId, images, colorId, sizeId, isFeatured, isArchived } = ProductValidator.parse(body);
+    const {
+      categoryId,
+      colorId,
+      images,
+      isArchived,
+      isFeatured,
+      name,
+      price,
+      sizeId,
+    } = ProductValidator.parse(body);
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -119,8 +127,8 @@ export async function PATCH(
     const storeByUserId = await db.store.findFirst({
       where: {
         id: params.storeId,
-        userId
-      }
+        userId,
+      },
     });
 
     if (!storeByUserId) {
@@ -128,38 +136,36 @@ export async function PATCH(
     }
 
     await db.product.update({
-      where: {
-        id: params.productId
-      },
       data: {
-        name,
-        price,
         categoryId,
         colorId,
-        sizeId,
         images: {
           deleteMany: {},
         },
-        isFeatured,
         isArchived,
+        isFeatured,
+        name,
+        price,
+        sizeId,
+      },
+      where: {
+        id: params.productId,
       },
     });
 
     const product = await db.product.update({
-      where: {
-        id: params.productId
-      },
       data: {
         images: {
           createMany: {
-            data: [
-              ...images.map((image: { url: string }) => image),
-            ],
+            data: [...images.map((image: { url: string }) => image)],
           },
         },
       },
-    })
-  
+      where: {
+        id: params.productId,
+      },
+    });
+
     return NextResponse.json(product);
   } catch (error) {
     console.log(error);
@@ -169,4 +175,4 @@ export async function PATCH(
 
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

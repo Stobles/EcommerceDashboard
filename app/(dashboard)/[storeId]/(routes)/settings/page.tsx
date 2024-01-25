@@ -13,19 +13,19 @@ interface SettingsPageProps {
 const SettingsPage: FC<SettingsPageProps> = async ({ params: { storeId } }) => {
   const { userId } = auth();
 
-  if(!userId) {
-    redirect('/sign-in');
+  if (!userId) {
+    redirect("/sign-in");
   }
 
   const store = await db.store.findFirst({
     where: {
       id: storeId,
-      userId
-    }
+      userId,
+    },
   });
 
-  if(!store) {
-    redirect('/');
+  if (!store) {
+    redirect("/");
   }
 
   return (

@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
 
-import db from '@/lib/prismadb';
-import { SizeValidator } from '@/lib/validators/size';
-import { z } from 'zod';
- 
+import db from "@/lib/prismadb";
+import { SizeValidator } from "@/lib/validators/size";
+import { z } from "zod";
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -35,8 +35,8 @@ export async function POST(
     const storeByUserId = await db.store.findFirst({
       where: {
         id: params.storeId,
-        userId
-      }
+        userId,
+      },
     });
 
     if (!storeByUserId) {
@@ -46,11 +46,11 @@ export async function POST(
     const size = await db.size.create({
       data: {
         name,
+        storeId: params.storeId,
         value,
-        storeId: params.storeId
-      }
+      },
     });
-  
+
     return NextResponse.json(size);
   } catch (error) {
     console.log(error);
@@ -60,7 +60,7 @@ export async function POST(
 
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function GET(
   req: Request,
@@ -73,13 +73,13 @@ export async function GET(
 
     const sizes = await db.size.findMany({
       where: {
-        storeId: params.storeId
-      }
+        storeId: params.storeId,
+      },
     });
-  
+
     return NextResponse.json(sizes);
   } catch (error) {
-    console.log('[SIZES_GET]', error);
+    console.log("[SIZES_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

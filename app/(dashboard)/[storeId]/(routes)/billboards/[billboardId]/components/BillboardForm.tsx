@@ -53,18 +53,21 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const action = initialData ? "Сохранить изменения" : "Создать";
 
   const form = useForm<BillboardRequest>({
-    resolver: zodResolver(BillboardValidator),
     defaultValues: initialData || {
-      label: "",
       imageUrl: "",
+      label: "",
     },
+    resolver: zodResolver(BillboardValidator),
   });
 
-  const { mutate: onSubmit, isLoading: isChangeLoading } = useMutation({
-    mutationFn: async ({ label, imageUrl }: BillboardRequest) => {
-      const payload: BillboardRequest = { label, imageUrl };
+  const { isLoading: isChangeLoading, mutate: onSubmit } = useMutation({
+    mutationFn: async ({ imageUrl, label }: BillboardRequest) => {
+      const payload: BillboardRequest = { imageUrl, label };
       const { data } = initialData
-        ? await axios.patch(`/api/${params.storeId}/billboards/${params.billboardId}`, payload)
+        ? await axios.patch(
+            `/api/${params.storeId}/billboards/${params.billboardId}`,
+            payload
+          )
         : await axios.post(`/api/${params.storeId}/billboards`, payload);
       return data;
     },
@@ -84,8 +87,8 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         }
       }
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -98,17 +101,19 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
     },
   });
 
-  const { mutate: deleteStore, isLoading: isDeleteLoading } = useMutation({
+  const { isLoading: isDeleteLoading, mutate: deleteStore } = useMutation({
     mutationFn: async () => {
-      const { data } = await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`);
+      const { data } = await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
       return data;
     },
     onError: (err) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 400) {
           toast({
-            title: "Неправильный id.",
             description: "Введен неверный id билборда.",
+            title: "Неправильный id.",
             variant: "destructive",
           });
           return;
@@ -119,7 +124,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           return;
         }
 
-        if(err.response?.status === 405) {
+        if (err.response?.status === 405) {
           toast({
             title: "Вы не можете удалить этот билборд.",
             variant: "destructive",
@@ -127,8 +132,9 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
           return;
         }
         toast({
+          description:
+            "Убедитесь, что вы удалили все категории, которые используют этот билборд.",
           title: "Произошла ошибка",
-          description: "Убедитесь, что вы удалили все категории, которые используют этот билборд.",
           variant: "destructive",
         });
         return;

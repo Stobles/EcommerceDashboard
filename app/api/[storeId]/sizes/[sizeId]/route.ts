@@ -105,12 +105,12 @@ export async function PATCH(
     }
 
     const size = await db.size.update({
-      where: {
-        id: params.sizeId,
-      },
       data: {
         name,
         value,
+      },
+      where: {
+        id: params.sizeId,
       },
     });
 

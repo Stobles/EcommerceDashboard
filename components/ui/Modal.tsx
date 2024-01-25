@@ -18,11 +18,11 @@ interface ModalProps {
 }
 
 export const Modal: FC<ModalProps> = ({
-  title,
+  children,
   description,
   isOpen,
   onClose,
-  children,
+  title,
 }) => {
   const onChange = (open: boolean) => {
     if (!open) {

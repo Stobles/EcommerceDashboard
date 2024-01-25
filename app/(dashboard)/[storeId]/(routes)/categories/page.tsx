@@ -2,31 +2,27 @@ import { format } from "date-fns";
 
 import db from "@/lib/prismadb";
 
-import { CategoriesColumn } from "./components/columns"
+import { CategoriesColumn } from "./components/columns";
 import { CategoriesClient } from "./components/Client";
 
-const CategoriesPage = async ({
-  params
-}: {
-  params: { storeId: string }
-}) => {
+const CategoriesPage = async ({ params }: { params: { storeId: string } }) => {
   const categories = await db.category.findMany({
-    where: {
-      storeId: params.storeId
-    },
     include: {
       billboard: true,
     },
     orderBy: {
-      createdAt: 'desc'
-    }
+      createdAt: "desc",
+    },
+    where: {
+      storeId: params.storeId,
+    },
   });
 
   const formattedCategories: CategoriesColumn[] = categories.map((item) => ({
+    billboardLabel: item.billboard.label,
+    createdAt: format(item.createdAt, "MMMM do, yyyy"),
     id: item.id,
     name: item.name,
-    billboardLabel: item.billboard.label,
-    createdAt: format(item.createdAt, 'MMMM do, yyyy'),
   }));
 
   return (

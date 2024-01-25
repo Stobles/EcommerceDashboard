@@ -12,44 +12,44 @@ const MainNav = ({
   const params = useParams();
   const routes = [
     {
+      active: pathname === `/${params.storeId}`,
       href: `/${params.storeId}`,
       label: "Главная",
-      active: pathname === `/${params.storeId}`,
     },
     {
+      active: pathname === `/${params.storeId}/billboards`,
       href: `/${params.storeId}/billboards`,
       label: "Билборды",
-      active: pathname === `/${params.storeId}/billboards`,
     },
     {
+      active: pathname === `/${params.storeId}/categories`,
       href: `/${params.storeId}/categories`,
       label: "Категории",
-      active: pathname === `/${params.storeId}/categories`,
     },
     {
+      active: pathname === `/${params.storeId}/sizes`,
       href: `/${params.storeId}/sizes`,
       label: "Размеры",
-      active: pathname === `/${params.storeId}/sizes`,
     },
     {
+      active: pathname === `/${params.storeId}/colors`,
       href: `/${params.storeId}/colors`,
       label: "Цвета",
-      active: pathname === `/${params.storeId}/colors`,
     },
     {
+      active: pathname === `/${params.storeId}/products`,
       href: `/${params.storeId}/products`,
       label: "Товары",
-      active: pathname === `/${params.storeId}/products`,
     },
     {
+      active: pathname === `/${params.storeId}/orders`,
       href: `/${params.storeId}/orders`,
       label: "Заказы",
-      active: pathname === `/${params.storeId}/orders`,
     },
     {
+      active: pathname === `/${params.storeId}/settings`,
       href: `/${params.storeId}/settings`,
       label: "Настройки",
-      active: pathname === `/${params.storeId}/settings`,
     },
   ];
   return (

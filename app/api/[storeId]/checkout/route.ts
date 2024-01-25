@@ -5,9 +5,9 @@ import { stripe } from "@/lib/stripe";
 import db from "@/lib/prismadb";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Origin": "*",
 };
 
 export async function OPTIONS() {
@@ -36,7 +36,6 @@ export async function POST(
 
   products.forEach((product) => {
     line_items.push({
-      quantity: 1,
       price_data: {
         currency: "USD",
         product_data: {
@@ -44,12 +43,12 @@ export async function POST(
         },
         unit_amount: product.price.toNumber() * 100,
       },
+      quantity: 1,
     });
   });
 
   const order = await db.order.create({
     data: {
-      storeId: params.storeId,
       isPaid: false,
       orderItems: {
         create: productIds.map((productId: string) => ({
@@ -60,21 +59,22 @@ export async function POST(
           },
         })),
       },
+      storeId: params.storeId,
     },
   });
 
   const session = await stripe.checkout.sessions.create({
-    line_items,
-    mode: "payment",
     billing_address_collection: "required",
+    cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?canceled=1`,
+    line_items,
+    metadata: {
+      orderId: order.id,
+    },
+    mode: "payment",
     phone_number_collection: {
       enabled: true,
     },
     success_url: `${process.env.FRONTEND_STORE_URL}/cart?success=1`,
-    cancel_url: `${process.env.FRONTEND_STORE_URL}/cart?canceled=1`,
-    metadata: {
-      orderId: order.id,
-    },
   });
 
   return NextResponse.json(

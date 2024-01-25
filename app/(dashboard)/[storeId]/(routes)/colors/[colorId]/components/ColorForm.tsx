@@ -43,13 +43,13 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
   const action = initialData ? "Сохранить." : "Создать.";
 
   const form = useForm<ColorRequest>({
-    resolver: zodResolver(ColorValidator),
     defaultValues: initialData || {
       name: "",
     },
+    resolver: zodResolver(ColorValidator),
   });
 
-  const { mutate: onSubmit, isLoading: isChangeLoading } = useMutation({
+  const { isLoading: isChangeLoading, mutate: onSubmit } = useMutation({
     mutationFn: async ({ name, value }: ColorRequest) => {
       const payload: ColorRequest = { name, value };
       const { data } = initialData
@@ -76,8 +76,8 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
         }
       }
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -90,7 +90,7 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
     },
   });
 
-  const { mutate: onDelete, isLoading: isDeleteLoading } = useMutation({
+  const { isLoading: isDeleteLoading, mutate: onDelete } = useMutation({
     mutationFn: async () => {
       const { data } = await axios.delete(
         `/api/${params.storeId}/colors/${params.colorId}`
@@ -101,8 +101,8 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 400) {
           toast({
-            title: "Неправильный id.",
             description: "Введен неверный id.",
+            title: "Неправильный id.",
             variant: "destructive",
           });
           return;
@@ -121,9 +121,9 @@ export const ColorForm: React.FC<ColorFormProps> = ({ initialData }) => {
           return;
         }
         toast({
-          title: "Произошла ошибка",
           description:
             "Убедитесь, что вы удалили все товары, которые используют этот размер.",
+          title: "Произошла ошибка",
           variant: "destructive",
         });
         return;

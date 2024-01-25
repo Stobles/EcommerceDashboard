@@ -7,28 +7,24 @@ interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout = async ({ children } : LayoutProps) => {
+const Layout = async ({ children }: LayoutProps) => {
   const { userId } = auth();
 
-  if(!userId) {
-    redirect('/sign-in')
+  if (!userId) {
+    redirect("/sign-in");
   }
 
   const store = await db.store.findFirst({
     where: {
       userId,
-    }
-  })
+    },
+  });
 
-  if(store) {
-    redirect(`/${store.id}`)
+  if (store) {
+    redirect(`/${store.id}`);
   }
 
-  return (
-    <>
-      {children}
-    </>
-  )
+  return <>{children}</>;
 };
 
 export default Layout;

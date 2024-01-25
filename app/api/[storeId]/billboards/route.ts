@@ -1,10 +1,10 @@
-import { NextResponse } from 'next/server';
-import { auth } from '@clerk/nextjs';
+import { NextResponse } from "next/server";
+import { auth } from "@clerk/nextjs";
 
-import prismadb from '@/lib/prismadb';
-import { BillboardValidator } from '@/lib/validators/billboard';
-import { z } from 'zod';
- 
+import prismadb from "@/lib/prismadb";
+import { BillboardValidator } from "@/lib/validators/billboard";
+import { z } from "zod";
+
 export async function POST(
   req: Request,
   { params }: { params: { storeId: string } }
@@ -14,7 +14,7 @@ export async function POST(
 
     const body = await req.json();
 
-    const { label, imageUrl } = BillboardValidator.parse(body);
+    const { imageUrl, label } = BillboardValidator.parse(body);
 
     if (!userId) {
       return new NextResponse("Unauthenticated", { status: 403 });
@@ -36,7 +36,7 @@ export async function POST(
       where: {
         id: params.storeId,
         userId,
-      }
+      },
     });
 
     if (!storeByUserId) {
@@ -45,12 +45,12 @@ export async function POST(
 
     const billboard = await prismadb.billboard.create({
       data: {
-        label,
         imageUrl,
+        label,
         storeId: params.storeId,
-      }
+      },
     });
-  
+
     return NextResponse.json(billboard);
   } catch (error) {
     console.log(error);
@@ -60,7 +60,7 @@ export async function POST(
 
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}
 
 export async function GET(
   req: Request,
@@ -73,13 +73,13 @@ export async function GET(
 
     const billboards = await prismadb.billboard.findMany({
       where: {
-        storeId: params.storeId
-      }
+        storeId: params.storeId,
+      },
     });
-  
+
     return NextResponse.json(billboards);
   } catch (error) {
-    console.log('[BILLBOARDS_GET]', error);
+    console.log("[BILLBOARDS_GET]", error);
     return new NextResponse("Internal error", { status: 500 });
   }
-};
+}

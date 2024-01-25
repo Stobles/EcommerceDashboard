@@ -18,15 +18,15 @@ export const columns: ColumnDef<CategoriesColumn>[] = [
   },
   {
     accessorKey: "billboard",
-    header: "Billboard",
     cell: ({ row }) => row.original.billboardLabel,
+    header: "Billboard",
   },
   {
     accessorKey: "createdAt",
     header: "Date",
   },
   {
-    id: "actions",
     cell: ({ row }) => <CellAction data={row.original} />,
+    id: "actions",
   },
 ];

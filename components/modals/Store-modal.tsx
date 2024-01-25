@@ -31,13 +31,13 @@ const StoreModal = () => {
   const [id, setId] = useState<number>();
 
   const form = useForm<StoreRequest>({
-    resolver: zodResolver(StoreValidator),
     defaultValues: {
       name: "",
     },
+    resolver: zodResolver(StoreValidator),
   });
 
-  const { mutate: createStore, isLoading } = useMutation({
+  const { isLoading, mutate: createStore } = useMutation({
     mutationFn: async ({ name }: StoreRequest) => {
       const payload: StoreRequest = { name };
 
@@ -53,23 +53,23 @@ const StoreModal = () => {
 
         if (err.response?.status === 409) {
           toast({
-            title: "Имя магазина уже занято",
             description: "Введите другое название магазина.",
+            title: "Имя магазина уже занято",
             variant: "destructive",
           });
           return;
         }
 
         toast({
-          title: "Неизвестная ошибка",
           description: "Произошла ошибка. Попробуйте еще раз",
+          title: "Неизвестная ошибка",
           variant: "destructive",
         });
       }
     },
     onSuccess: () => {
       toast({
-        description: 'Магазин успешно создан.',
+        description: "Магазин успешно создан.",
       });
       window.location.assign(`/${id}`);
     },

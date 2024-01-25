@@ -39,11 +39,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
   const [open, setOpen] = useState(false);
 
   const form = useForm<SettingsRequest>({
-    resolver: zodResolver(SettingsValidator),
     defaultValues: initialData,
+    resolver: zodResolver(SettingsValidator),
   });
 
-  const { mutate: changeSettings, isLoading: isChangeLoading } = useMutation({
+  const { isLoading: isChangeLoading, mutate: changeSettings } = useMutation({
     mutationFn: async ({ name }: SettingsRequest) => {
       const payload: SettingsRequest = { name };
       const { data } = await axios.patch(
@@ -56,8 +56,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           toast({
-            title: "Неправильное название",
             description: "Такое название уже используется",
+            title: "Неправильное название",
             variant: "destructive",
           });
           return;
@@ -65,8 +65,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
 
         if (err.response?.status === 401) {
           toast({
-            title: "Авторизуйтесь",
             description: "Авторизуйтесь, чтобы изменить название.",
+            title: "Авторизуйтесь",
             variant: "destructive",
           });
           return;
@@ -74,8 +74,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       }
 
       toast({
-        title: "Ошибка.",
         description: "Непредвиденная ошибка. Попробуйте еще раз.",
+        title: "Ошибка.",
         variant: "destructive",
       });
     },
@@ -87,7 +87,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     },
   });
 
-  const { mutate: deleteStore, isLoading: isDeleteLoading } = useMutation({
+  const { isLoading: isDeleteLoading, mutate: deleteStore } = useMutation({
     mutationFn: async () => {
       const { data } = await axios.delete(`/api/stores/${params.storeId}`);
       return data;
@@ -95,16 +95,16 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
     onError: (err) => {
       if (err instanceof AxiosError) {
         toast({
-          title: "Произошла ошибка",
           description: "Непредвиденная ошибка. Попробуйте еще раз",
+          title: "Произошла ошибка",
           variant: "destructive",
         });
         return;
       }
 
       toast({
-        title: "Произошла ошибка",
         description: "Непредвиденная ошибка. Попробуйте еще раз",
+        title: "Произошла ошибка",
         variant: "destructive",
       });
     },

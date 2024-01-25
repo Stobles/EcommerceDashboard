@@ -15,15 +15,15 @@ export async function POST(
     const body = await req.json();
 
     const {
-      name,
-      price,
       amount,
       categoryId,
       colorId,
-      sizeId,
       images,
-      isFeatured,
       isArchived,
+      isFeatured,
+      name,
+      price,
+      sizeId,
     } = ProductValidator.parse(body);
 
     if (!userId) {
@@ -75,20 +75,20 @@ export async function POST(
 
     const product = await db.product.create({
       data: {
-        name,
-        price,
         amount,
-        isFeatured,
-        isArchived: amount === 0 ? true : isArchived,
         categoryId,
         colorId,
-        sizeId,
-        storeId: params.storeId,
         images: {
           createMany: {
             data: [...images.map((image: { url: string }) => image)],
           },
         },
+        isArchived: amount === 0 ? true : isArchived,
+        isFeatured,
+        name,
+        price,
+        sizeId,
+        storeId: params.storeId,
       },
     });
 
@@ -119,22 +119,22 @@ export async function GET(
     }
 
     const products = await db.product.findMany({
-      where: {
-        storeId: params.storeId,
-        categoryId,
-        colorId,
-        sizeId,
-        isFeatured: isFeatured ? true : undefined,
-        isArchived: false,
-      },
       include: {
-        images: true,
         category: true,
         color: true,
+        images: true,
         size: true,
       },
       orderBy: {
         createdAt: "desc",
+      },
+      where: {
+        categoryId,
+        colorId,
+        isArchived: false,
+        isFeatured: isFeatured ? true : undefined,
+        sizeId,
+        storeId: params.storeId,
       },
     });
 

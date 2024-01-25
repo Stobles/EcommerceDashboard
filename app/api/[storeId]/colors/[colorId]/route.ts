@@ -105,12 +105,12 @@ export async function PATCH(
     }
 
     const color = await db.color.update({
-      where: {
-        id: params.colorId,
-      },
       data: {
         name,
         value,
+      },
+      where: {
+        id: params.colorId,
       },
     });
 
