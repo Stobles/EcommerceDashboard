@@ -5,9 +5,11 @@ import {
   useContext,
   useCallback,
   HTMLProps,
+  useEffect,
 } from "react";
 import { Button } from "./Button";
 import Link, { LinkProps } from "next/link";
+import { usePathname } from "next/navigation";
 
 type SidebarContextType = {
   isOpen: boolean;
@@ -18,10 +20,15 @@ const SidebarContext = createContext<SidebarContextType | null>(null);
 
 export const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   const toggleSidebar = useCallback(() => {
     setIsOpen(!isOpen);
   }, [isOpen]);
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
   return (
     <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>
       {children}
