@@ -41,7 +41,7 @@ export default async function DashboardLayout({
     <>
       <Navbar stores={stores} />
       <div className="flex-col">
-        <div className="flex-1 space-y-4 p-2 sm:p-8 pt-6">{children}</div>
+        <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">{children}</div>
       </div>
     </>
   );

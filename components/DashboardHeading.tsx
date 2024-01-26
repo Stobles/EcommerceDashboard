@@ -19,11 +19,11 @@ const DashboardHeading: FC<DashboardHeadingProps> = ({
 }) => {
   const router = useRouter();
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between gap-2">
       <Heading title={title} description={description} />
       {isEdit ? (
         <Button onClick={() => router.push(redirectTo)}>
-          <Plus className="mr-2 h-4 w-4" /> Add New
+          <Plus className="mr-2 h-4 w-4" /> Add
         </Button>
       ) : null}
     </div>
