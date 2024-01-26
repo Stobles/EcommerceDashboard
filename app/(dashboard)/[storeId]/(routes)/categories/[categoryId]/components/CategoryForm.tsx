@@ -32,7 +32,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import Image from "next/image";
 
 interface CategoryFormProps {
   initialData: Category | null;

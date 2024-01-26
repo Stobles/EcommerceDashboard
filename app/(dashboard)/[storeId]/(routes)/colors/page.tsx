@@ -22,13 +22,7 @@ const ColorsPage = async ({ params }: { params: { storeId: string } }) => {
     value: item.value,
   }));
 
-  return (
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <ColorsClient data={formattedColors} />
-      </div>
-    </div>
-  );
+  return <ColorsClient data={formattedColors} />;
 };
 
 export default ColorsPage;
