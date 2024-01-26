@@ -22,13 +22,7 @@ const SizesPage = async ({ params }: { params: { storeId: string } }) => {
     value: item.value,
   }));
 
-  return (
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 p-8 pt-6">
-        <SizesClient data={formattedSizes} />
-      </div>
-    </div>
-  );
+  return <SizesClient data={formattedSizes} />;
 };
 
 export default SizesPage;
