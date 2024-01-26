@@ -27,14 +27,22 @@ export default async function DashboardLayout({
     },
   });
 
+  const stores = await db.store.findMany({
+    where: {
+      userId,
+    },
+  });
+
   if (!store) {
     redirect("/");
   }
 
   return (
     <>
-      <Navbar />
-      {children}
+      <Navbar stores={stores} />
+      <div className="flex-col">
+        <div className="flex-1 space-y-4 p-4 sm:p-8 pt-6">{children}</div>
+      </div>
     </>
   );
 }

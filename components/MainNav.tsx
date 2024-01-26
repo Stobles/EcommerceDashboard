@@ -3,57 +3,15 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { Route } from "./Navbar";
 
 const MainNav = ({
   className,
+  routes,
   ...props
-}: React.HTMLAttributes<HTMLElement>) => {
-  const pathname = usePathname();
-  const params = useParams();
-  const routes = [
-    {
-      active: pathname === `/${params.storeId}`,
-      href: `/${params.storeId}`,
-      label: "Главная",
-    },
-    {
-      active: pathname === `/${params.storeId}/billboards`,
-      href: `/${params.storeId}/billboards`,
-      label: "Билборды",
-    },
-    {
-      active: pathname === `/${params.storeId}/categories`,
-      href: `/${params.storeId}/categories`,
-      label: "Категории",
-    },
-    {
-      active: pathname === `/${params.storeId}/sizes`,
-      href: `/${params.storeId}/sizes`,
-      label: "Размеры",
-    },
-    {
-      active: pathname === `/${params.storeId}/colors`,
-      href: `/${params.storeId}/colors`,
-      label: "Цвета",
-    },
-    {
-      active: pathname === `/${params.storeId}/products`,
-      href: `/${params.storeId}/products`,
-      label: "Товары",
-    },
-    {
-      active: pathname === `/${params.storeId}/orders`,
-      href: `/${params.storeId}/orders`,
-      label: "Заказы",
-    },
-    {
-      active: pathname === `/${params.storeId}/settings`,
-      href: `/${params.storeId}/settings`,
-      label: "Настройки",
-    },
-  ];
+}: React.HTMLAttributes<HTMLElement> & { routes: Route[] }) => {
   return (
-    <nav className={cn(className, "space-x-4 lg:space-x-6")}>
+    <nav className={cn(className, "space-x-6")}>
       {routes.map((route) => (
         <Link
           key={route.href}
