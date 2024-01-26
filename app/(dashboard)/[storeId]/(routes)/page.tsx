@@ -28,7 +28,7 @@ const DashboardPage: FC<DashboardPageProps> = async ({
     <>
       <Heading title="Dashboard" description="Overview of your store" />
       <Separator />
-      <div className="grid gap-4 grid-cols-3">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
@@ -65,9 +65,9 @@ const DashboardPage: FC<DashboardPageProps> = async ({
         </Card>
       </div>
       <Card className="col-span-4">
-        <CardHeader>
+        <CardHeader className="px-2 pb-2">
           <CardTitle>Overview</CardTitle>
-          <CardContent className="pl-2">
+          <CardContent className="pl-2 pt-6">
             <Overview data={graphRevenue} />
           </CardContent>
         </CardHeader>
