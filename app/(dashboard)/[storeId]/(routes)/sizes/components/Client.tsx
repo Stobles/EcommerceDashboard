@@ -25,7 +25,7 @@ export const SizesClient: React.FC<SizesClientProps> = ({ data }) => {
       <DashboardHeading
         title={`Размеры (${data.length})`}
         description="Управляйте размерами в своем магазине"
-        redirectTo={`/${params.storeId}/products/new`}
+        redirectTo={`/${params.storeId}/sizes/new`}
       />
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />

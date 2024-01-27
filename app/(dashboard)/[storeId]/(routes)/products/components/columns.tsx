@@ -24,7 +24,7 @@ export const columns: ColumnDef<ProductColumn>[] = [
   },
   {
     accessorKey: "isArchived",
-    header: "Archived",
+    header: "Состояние",
   },
   {
     accessorKey: "isFeatured",

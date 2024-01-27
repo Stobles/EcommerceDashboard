@@ -72,9 +72,9 @@ const StoreSwitcher: FC<StoreSwitcherProps> = ({ className, items = [] }) => {
       <PopoverContent className="w-[200px] p-0">
         <Command>
           <CommandList>
-            <CommandInput placeholder="Search store..." />
-            <CommandEmpty>No store found.</CommandEmpty>
-            <CommandGroup heading="Stores">
+            <CommandInput placeholder="Искать..." />
+            <CommandEmpty>Магазины не найдены.</CommandEmpty>
+            <CommandGroup heading="Магазины">
               {formattedItems.map((store) => (
                 <CommandItem
                   key={store.value}
@@ -105,7 +105,7 @@ const StoreSwitcher: FC<StoreSwitcherProps> = ({ className, items = [] }) => {
                 }}
               >
                 <PlusCircle className="mr-2 h-5 w-5" />
-                Create Store
+                Создать магазин
               </CommandItem>
             </CommandGroup>
           </CommandList>

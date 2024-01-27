@@ -35,6 +35,6 @@ export const columns: ColumnDef<OrderColumn>[] = [
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: "Дата",
   },
 ];

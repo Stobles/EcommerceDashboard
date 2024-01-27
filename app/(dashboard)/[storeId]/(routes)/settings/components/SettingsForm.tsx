@@ -127,8 +127,8 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
       />
       <div className="flex items-center justify-between">
         <Heading
-          title="Store settings"
-          description="Manage store preferences"
+          title="Настройки магазина"
+          description="Управляйте настройками своего магазина"
         />
         <Button
           disabled={isChangeLoading || isDeleteLoading}
@@ -151,11 +151,11 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
               name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Название</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isChangeLoading || isDeleteLoading}
-                      placeholder="Store name"
+                      placeholder="Название магазина"
                       {...field}
                     />
                   </FormControl>
@@ -169,7 +169,7 @@ export const SettingsForm: React.FC<SettingsFormProps> = ({ initialData }) => {
             className="ml-auto"
             type="submit"
           >
-            Save changes
+            Сохранить изменения
           </Button>
         </form>
       </Form>

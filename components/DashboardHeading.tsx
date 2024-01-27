@@ -23,7 +23,7 @@ const DashboardHeading: FC<DashboardHeadingProps> = ({
       <Heading title={title} description={description} />
       {isEdit ? (
         <Button onClick={() => router.push(redirectTo)}>
-          <Plus className="mr-2 h-4 w-4" /> Add
+          <Plus className="mr-2 h-4 w-4" /> Добавить
         </Button>
       ) : null}
     </div>
