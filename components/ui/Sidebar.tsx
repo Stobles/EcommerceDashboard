@@ -22,9 +22,9 @@ export const Sidebar = ({ children }: { children: React.ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
-  const toggleSidebar = useCallback(() => {
+  const toggleSidebar = () => {
     setIsOpen(!isOpen);
-  }, [isOpen]);
+  }
 
   useEffect(() => {
     setIsOpen(false);
