@@ -229,7 +229,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               </FormItem>
             )}
           />
-          <div className="md:grid md:grid-cols-3 gap-8">
+          <div className="flex md:grid flex-col md:grid-cols-3 gap-8">
             <FormField
               control={form.control}
               name="name"
@@ -288,7 +288,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               name="categoryId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>Категория</FormLabel>
                   <Select
                     disabled={isDeleteLoading || isChangeLoading}
                     onValueChange={field.onChange}
@@ -299,7 +299,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a category"
+                          placeholder="Выберите категорию"
                         />
                       </SelectTrigger>
                     </FormControl>
@@ -320,7 +320,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               name="sizeId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Size</FormLabel>
+                  <FormLabel>Размер</FormLabel>
                   <Select
                     disabled={isDeleteLoading || isChangeLoading}
                     onValueChange={field.onChange}
@@ -331,7 +331,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a size"
+                          placeholder="Выберите размер"
                         />
                       </SelectTrigger>
                     </FormControl>
@@ -352,7 +352,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
               name="colorId"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Color</FormLabel>
+                  <FormLabel>Цвет</FormLabel>
                   <Select
                     disabled={isDeleteLoading || isChangeLoading}
                     onValueChange={field.onChange}
@@ -363,7 +363,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                       <SelectTrigger>
                         <SelectValue
                           defaultValue={field.value}
-                          placeholder="Select a color"
+                          placeholder="Выбрать цвет"
                         />
                       </SelectTrigger>
                     </FormControl>
@@ -394,7 +394,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                   <div className="space-y-1 leading-none">
                     <FormLabel>Featured</FormLabel>
                     <FormDescription>
-                      This product will appear on the home page
+                      Этот продукт будет отображаться на главной странице
                     </FormDescription>
                   </div>
                 </FormItem>
@@ -413,9 +413,9 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormLabel>Archived</FormLabel>
+                    <FormLabel>Снять</FormLabel>
                     <FormDescription>
-                      This product will not appear anywhere in the store.
+                      Этот продукт не будет отображаться в магазине.
                     </FormDescription>
                   </div>
                 </FormItem>

@@ -14,7 +14,7 @@ export type ColorColumn = {
 export const columns: ColumnDef<ColorColumn>[] = [
   {
     accessorKey: "name",
-    header: "Name",
+    header: "Название",
   },
   {
     accessorKey: "value",
@@ -27,11 +27,11 @@ export const columns: ColumnDef<ColorColumn>[] = [
         />
       </div>
     ),
-    header: "Value",
+    header: "Цвет",
   },
   {
     accessorKey: "createdAt",
-    header: "Date",
+    header: "Дата",
   },
   {
     cell: ({ row }) => <CellAction data={row.original} />,

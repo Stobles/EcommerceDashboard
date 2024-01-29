@@ -1,9 +1,7 @@
 "use client";
 
-import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 
-import { Button } from "@/components/ui/Button";
 import { DataTable } from "@/components/ui/DataTable";
 import { Heading } from "@/components/ui/Heading";
 import { Separator } from "@/components/ui/Separator";
@@ -18,7 +16,6 @@ interface ProductsClientProps {
 
 export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
   const params = useParams();
-  const router = useRouter();
 
   return (
     <>
@@ -29,7 +26,7 @@ export const ProductsClient: React.FC<ProductsClientProps> = ({ data }) => {
       />
       <Separator />
       <DataTable searchKey="name" columns={columns} data={data} />
-      <Heading title="API" description="API Calls for Products" />
+      <Heading title="API" description="API для товаров" />
       <Separator />
       <ApiList entityName="products" entityIdName="productId" />
     </>

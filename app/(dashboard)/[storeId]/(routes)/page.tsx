@@ -26,12 +26,12 @@ const DashboardPage: FC<DashboardPageProps> = async ({
 
   return (
     <>
-      <Heading title="Dashboard" description="Overview of your store" />
+      <Heading title="Админ-панель" description="Статистика вашего магазина" />
       <Separator />
       <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">Выручка</CardTitle>
 
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -43,7 +43,7 @@ const DashboardPage: FC<DashboardPageProps> = async ({
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">Продажи</CardTitle>
 
             <CreditCard className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
@@ -54,7 +54,7 @@ const DashboardPage: FC<DashboardPageProps> = async ({
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">
-              Products in Stock
+              Кол-во товаров
             </CardTitle>
 
             <Package className="h-4 w-4 text-muted-foreground" />
@@ -66,7 +66,7 @@ const DashboardPage: FC<DashboardPageProps> = async ({
       </div>
       <Card className="col-span-4">
         <CardHeader className="px-2 pb-2">
-          <CardTitle>Overview</CardTitle>
+          <CardTitle>Статистика</CardTitle>
           <CardContent className="pl-2 pt-6">
             <Overview data={graphRevenue} />
           </CardContent>
